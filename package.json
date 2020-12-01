@@ -1,0 +1,32 @@
+{
+  "name": "adventofcode2020",
+  "version": "1.0.0",
+  "description": "solutions for advent of 2020",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CharlesMenier/AdventOfCode2020.git"
+  },
+  "keywords": [
+    "adventofcode",
+    "2020"
+  ],
+  "author": "Charles Ménier",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CharlesMenier/AdventOfCode2020/issues"
+  },
+  "homepage": "https://github.com/CharlesMenier/AdventOfCode2020#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.9",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "express": "^4.17.1"
+  }
+}
