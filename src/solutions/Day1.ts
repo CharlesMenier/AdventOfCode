@@ -35,6 +35,7 @@ const part2 = (input: number[]): number => {
 
 export default function(): Promise<Solution> {
     return getInput(1)
+        .then(input => input.map(a => parseInt(a)))
         .then(input => ({
             1: part1(input),
             2: part2(input)

@@ -6,7 +6,7 @@ export type Solution = {
     2: any,
 }
 
-export function getInput(day: number): Promise<number[]> {
+export function getInput(day: number): Promise<any[]> {
     return axios.get(
         `https://adventofcode.com/2020/day/${day}/input`,
         {
@@ -15,7 +15,7 @@ export function getInput(day: number): Promise<number[]> {
             }
         })
         .then(r => {
-            return r.data.split('\n').map(a => parseInt(a));
+            return r.data.split('\n').filter(a => a);
         })
         .catch((e => console.warn(e)));
 }
