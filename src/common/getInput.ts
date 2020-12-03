@@ -1,12 +1,27 @@
 import axios from 'axios';
 import config from './config';
 
-export type Solution = {
-    1: any,
-    2: any,
+
+export type Input = {
+    raw: string,
+    formatted: string[],
 }
 
-export function getInput(day: number): Promise<string[]> {
+export type Solution = {
+    rawInput: string,
+    solution1Input?: any,
+    solution2Input?: any,
+    solution1: any,
+    solution2: any,
+}
+
+export const errorData = {
+    rawInput: '',
+    solution1: null,
+    solution2: null
+};
+
+export function getInput(day: number): Promise<Input> {
     return axios.get(
         `https://adventofcode.com/2020/day/${day}/input`,
         {
@@ -14,8 +29,8 @@ export function getInput(day: number): Promise<string[]> {
                 Cookie: `session=${config.cookie}`
             }
         })
-        .then(r => {
-            return r.data.split('\n').filter(a => a);
-        })
-        .catch((e => console.warn(e)));
+        .then(r => ({
+            raw: r.data,
+            formatted: r.data.split('\n').filter(a => a),
+        }));
 }

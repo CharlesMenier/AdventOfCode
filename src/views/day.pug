@@ -1,0 +1,17 @@
+html
+    include head.pug
+    include header.pug
+    body
+        main: article.day-desc
+            h2= '--- ' + title + ' ---'
+            h2= '--- Part 1 ---'
+            p= question1
+            p= 'Solution for part 1 is '
+                span!= solution1
+            pre: code!= input1
+            h2= '--- Part 2 ---'
+            p= question2
+            p= 'Solution for part 2 is '
+                span!= solution2
+            div: pre: code!= input2
+

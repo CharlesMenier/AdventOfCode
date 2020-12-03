@@ -5,19 +5,54 @@ import Day3 from "./solutions/Day3";
 
 const app = express();
 const port = 3000;
+
+app.set('view engine', 'pug');
+app.set('views', './src/views');
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
-    res.send('The sedulous hyena ate the antelope!');
-});
-app.get('/day1', (req, res) => {
-    Day1().then(s => res.send(s));
+    res.render('index', { title: 'Hey', message: 'Hello there!' })
 });
 
-app.get('/day2', (req, res) => {
-    Day2().then(s => res.send(s));
+app.get('/day/1', (req, res) => {
+    Day1()
+        .then(result => {
+            res.render('day', {
+                title: 'Day 1: Report Repair',
+                question1: 'Find the two entries that sum to 2020; what do you get if you multiply them together?',
+                question2: 'What is the product of the three entries that sum to 2020?',
+                input1: result.solution1Input,
+                input2: result.solution2Input,
+                solution1: '<code>' + result.solution1.join(' * ') + ' = ' + result.solution1.reduce((t, c) => t * c, 1) + '</code>',
+                solution2: '<code>' + result.solution2.join(' * ') + ' = ' + result.solution2.reduce((t, c) => t * c, 1) + '</code>',
+            });
+        });
 });
 
-app.get('/day3', (req, res) => {
-    Day3().then(s => res.send(s));
+app.get('/day/2', (req, res) => {
+    Day2()
+        .then(result => {
+            res.render('day', {
+                title: 'Day 2: Password Philosophy',
+                input1: result.solution1Input,
+                input2: result.solution2Input,
+                solution1: result.solution1,
+                solution2: result.solution2,
+            });
+        });
+});
+
+app.get('/day/3', (req, res) => {
+    Day3()
+        .then(result => {
+            res.render('day', {
+                title: 'Day 3: Toboggan Trajectory',
+                input1: result.solution1Input,
+                input2: result.solution2Input,
+                solution1: result.solution1,
+                solution2: result.solution2,
+            });
+        });
 });
 
 app.listen(port, () => {

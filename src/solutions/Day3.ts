@@ -1,4 +1,4 @@
-import {getInput, Solution} from "../common/getInput";
+import {errorData, getInput, Solution} from "../common/getInput";
 
 const parseInput = (input: string): boolean[] => input.split('').map(c => c === '#');
 
@@ -39,17 +39,17 @@ const part2 = (map: boolean[][]): any => {
 
 export default function(): Promise<Solution> {
     return getInput(3)
-        .then(input => input.map(parseInput))
-        .then(input => ({
-            1: part1(input),
-            2: part2(input)
-        }))
+        .then(input => {
+            const parsedInput = input.formatted.map(parseInput);
+            return {
+                rawInput: input.raw,
+                solution1: part1(parsedInput),
+                solution2: part2(parsedInput)
+            }
+        })
         .catch(e => {
             console.warn(e);
-            return {
-                1: -1,
-                2: -1
-            };
+            return errorData;
         })
 }
 
