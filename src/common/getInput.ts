@@ -6,7 +6,7 @@ export type Solution = {
     2: any,
 }
 
-export function getInput(day: number): Promise<any[]> {
+export function getInput(day: number): Promise<string[]> {
     return axios.get(
         `https://adventofcode.com/2020/day/${day}/input`,
         {
