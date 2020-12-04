@@ -21,7 +21,7 @@ export const errorData = {
     solution2: null
 };
 
-export function getInput(day: number): Promise<Input> {
+export function getInput(day: number, split: string = '\n'): Promise<Input> {
     return axios.get(
         `https://adventofcode.com/2020/day/${day}/input`,
         {
@@ -31,6 +31,6 @@ export function getInput(day: number): Promise<Input> {
         })
         .then(r => ({
             raw: r.data,
-            formatted: r.data.split('\n').filter(a => a),
+            formatted: r.data.split(split).filter(a => a),
         }));
 }

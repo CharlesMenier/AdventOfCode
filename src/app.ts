@@ -2,6 +2,7 @@ import express from 'express';
 import Day1 from './solutions/Day1';
 import Day2 from './solutions/Day2';
 import Day3 from "./solutions/Day3";
+import Day4 from "./solutions/Day4";
 
 const app = express();
 const port = 3000;
@@ -53,6 +54,20 @@ app.get('/day/3', (req, res) => {
                 solution2: result.solution2,
             });
         });
+});
+
+app.get('/day/4', (req, res) => {
+    Day4()
+       .then(result => {
+           res.render('day', {
+               title: 'Day 4: Passport Processing',
+               input1: result.rawInput,
+               input2: result.rawInput,
+               solution1: result.solution1,
+               solution2: result.solution2,
+           });
+       })
+       .catch(e => console.warn(e));
 });
 
 app.listen(port, () => {
