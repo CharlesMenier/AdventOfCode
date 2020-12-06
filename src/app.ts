@@ -1,9 +1,9 @@
 import express from 'express';
-import Day1 from './solutions/Day1';
-import Day2 from './solutions/Day2';
-import Day3 from "./solutions/Day3";
-import Day4 from "./solutions/Day4";
-import Day5 from "./solutions/Day5";
+import Day1 from './solutions/Day01';
+import Day2 from './solutions/Day02';
+import Day3 from "./solutions/Day03";
+import Day4 from "./solutions/Day04";
+import Day5 from "./solutions/Day05";
 
 const app = express();
 const port = 3000;
