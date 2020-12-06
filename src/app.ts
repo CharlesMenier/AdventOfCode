@@ -4,6 +4,7 @@ import Day2 from './solutions/Day02';
 import Day3 from "./solutions/Day03";
 import Day4 from "./solutions/Day04";
 import Day5 from "./solutions/Day05";
+import Day6 from "./solutions/Day06";
 
 const app = express();
 const port = 3000;
@@ -76,6 +77,20 @@ app.get('/day/5', (req, res) => {
       .then(result => {
          res.render('day', {
             title: 'Day 5: Binary Boarding',
+            input1: result.rawInput,
+            input2: result.rawInput,
+            solution1: result.solution1,
+            solution2: result.solution2,
+         });
+      })
+      .catch(e => console.warn(e));
+});
+
+app.get('/day/6', (req, res) => {
+   Day6()
+      .then(result => {
+         res.render('day', {
+            title: 'Day 6: Custom Customs',
             input1: result.rawInput,
             input2: result.rawInput,
             solution1: result.solution1,
