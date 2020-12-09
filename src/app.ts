@@ -6,6 +6,7 @@ import Day4 from "./solutions/Day04";
 import Day5 from "./solutions/Day05";
 import Day6 from "./solutions/Day06";
 import Day7 from "./solutions/Day07";
+import Day9 from "./solutions/Day09";
 
 const app = express();
 const port = 3000;
@@ -106,6 +107,20 @@ app.get('/day/7', (req, res) => {
       .then(result => {
          res.render('day', {
             title: 'Day 7: Handy Haversacks',
+            input1: result.rawInput,
+            input2: result.rawInput,
+            solution1: result.solution1,
+            solution2: result.solution2,
+         });
+      })
+      .catch(e => console.warn(e));
+});
+
+app.get('/day/9', (req, res) => {
+   Day9()
+      .then(result => {
+         res.render('day', {
+            title: 'Day 9: Encoding Error',
             input1: result.rawInput,
             input2: result.rawInput,
             solution1: result.solution1,
