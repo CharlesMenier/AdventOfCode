@@ -13,6 +13,8 @@ export type Solution = {
     solution2Input?: any,
     solution1: any,
     solution2: any,
+    time1?: any,
+    time2?: any,
 }
 
 export const errorData = {
