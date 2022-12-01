@@ -1,5 +1,6 @@
-import {errorData, getInput, Solution} from "../common/getInput";
+import {errorData, Solution} from "../../common/getInput";
 import {union, intersection} from 'lodash';
+import {getInput} from "../utils";
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 

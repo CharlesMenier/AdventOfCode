@@ -1,6 +1,7 @@
-# Advent Of Code 2020
+# Advent Of Code
 
-[Advent of code](https://adventofcode.com/2020) solutions for 2020 edition
+[Advent of code](https://adventofcode.com) solutions
+- [2020](./src/2020/2020.md)
 
 All the solution are in `JavaScript/TypeScript`.
 

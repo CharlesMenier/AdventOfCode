@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import config from './config';
 
 
@@ -23,9 +23,19 @@ export const errorData = {
     solution2: null
 };
 
-export function getInput(day: number, split: string|RegExp = '\n'): Promise<Input> {
+export function getQuestion(year: number, day: number): Promise<AxiosResponse<string>> {
     return axios.get(
-        `https://adventofcode.com/2020/day/${day}/input`,
+        `https://adventofcode.com/${year}/day/${day}`,
+        {
+            headers: {
+                Cookie: `session=${config.cookie}`
+            }
+        });
+}
+
+export function getInput(year: number, day: number, split: string|RegExp = '\n'): Promise<Input> {
+    return axios.get(
+        `https://adventofcode.com/${year}/day/${day}/input`,
         {
             headers: {
                 Cookie: `session=${config.cookie}`

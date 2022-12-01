@@ -1,4 +1,5 @@
-import {errorData, getInput, Solution} from "../common/getInput";
+import {errorData, Solution} from "../../common/getInput";
+import {getInput} from "../utils";
 
 const parseInput = (input: string): boolean[] => {
    return input
