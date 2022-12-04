@@ -1,6 +1,7 @@
 import Day1 from "./solutions/day01";
 import Day2 from "./solutions/day02";
 import Day3 from "./solutions/day03";
+import Day4 from "./solutions/day04";
 
 export default [
     (req, res) => {
@@ -37,6 +38,20 @@ export default [
                 res.render('day', {
                     title: 'Day 3: Rucksack Reorganization',
                     question1: 'Find the item type that appears in both compartments of each rucksack. What is the sum of the priorities of those item types?',
+                    question2: 'Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?',
+                    input1: result.solution1Input,
+                    input2: result.solution2Input,
+                    solution1: '<code>' + result.solution1 + '</code>',
+                    solution2: '<code>' + result.solution2 + '</code>',
+                });
+            });
+    },
+    (req, res) => {
+        Day4()
+            .then(result => {
+                res.render('day', {
+                    title: 'Day 4: Camp Cleanup',
+                    question1: 'In how many assignment pairs does one range fully contain the other?',
                     question2: 'Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?',
                     input1: result.solution1Input,
                     input2: result.solution2Input,
