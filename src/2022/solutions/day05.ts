@@ -1,6 +1,8 @@
 import Day from "../../common/day";
+import {get} from 'lodash';
 
 class Day05 extends Day {
+
     constructor() {
         super(2022, 5, 'Supply Stacks');
         this.setQuestion1('After the rearrangement procedure completes, what crate ends up on top of each stack?')
@@ -59,21 +61,44 @@ class Day05 extends Day {
 
     }
 
-    public async part1(): Promise<string> {
+    public async part1(): Promise<[string, string[][]]> {
          const stacks = await this.solve();
 
-         return stacks.reduce((crates, stack) => {
+         return [stacks.reduce((crates, stack) => {
              return `${crates}${stack[0]}`;
-         }, '');
+         }, ''), stacks];
 
     }
 
-    async part2(): Promise<string> {
+    async part2(): Promise<[string, string[][]]> {
         const stacks = await this.solve(true);
 
-        return stacks.reduce((crates, stack) => {
+        return [stacks.reduce((crates, stack) => {
             return `${crates}${stack[0]}`;
-        }, '');
+        }, ''), stacks];
+    }
+
+    print(result: string[][]): string {
+        const inverted = result.map(a => a.reverse());
+        const max = Math.max(...result.map(a => a.length));
+
+        let str = '';
+
+        for(let i = max; i >= 0; i--) {
+            for(let j = 0; j < inverted.length ; j++) {
+                const crate = get(inverted, `[${j}][${i}]`, undefined);
+
+                if(crate) {
+                    str = `${str} [${crate}]`;
+                } else {
+                    str = `${str}    `;
+                }
+            }
+
+            str = `${str}\n`;
+        }
+
+        return str;
     }
 }
 

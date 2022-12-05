@@ -36,8 +36,8 @@ abstract class Day {
 
     abstract solve(param?: any): Promise<any>;
 
-    abstract part1(): Promise<number|string>;
-    abstract part2(): Promise<number|string>;
+    abstract part1(): Promise<any>;
+    abstract part2(): Promise<any>;
 
 }
 

@@ -65,8 +65,10 @@ export default [
     async (req, res) => {
         const solver = new Day5();
 
-        const solution1 = await solver.part1();
-        const solution2 = await solver.part2();
+        const [solution1, printable1] = await solver.part1();
+        const [solution2, printable2] = await solver.part2();
+
+        console.log(printable1);
 
         res.render('day', {
             title: solver.title,
@@ -74,7 +76,9 @@ export default [
             question2: solver.question2,
             input: solver.input.raw,
             solution1: '<code>' + solution1 + '</code>',
+            output1: solver.print(printable1),
             solution2: '<code>' + solution2 + '</code>',
+            output2: solver.print(printable2),
         });
     },
     ];
