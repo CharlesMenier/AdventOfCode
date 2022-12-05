@@ -42,7 +42,7 @@ export function getInput(year: number, day: number, split: string|RegExp = '\n')
             }
         })
         .then(r => ({
-            raw: r.data.trim(),
-            formatted: r.data.trim().split(split).filter(a => a),
+            raw: r.data,
+            formatted: r.data.split(split).filter(a => a),
         }));
 }
