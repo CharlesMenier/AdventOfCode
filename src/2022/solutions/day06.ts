@@ -9,32 +9,27 @@ class Day06 extends Day {
         this.setQuestion2('How many characters need to be processed before the first start-of-message marker is detected?')
     }
 
-    async solve(): Promise<number> {
-        const {formatted} = await this.getInput('');
+    async solve(amount: number): Promise<number> {
+        const {raw} = await this.getInput('');
 
-        let index = 3;
+        let index = amount;
 
-        for(index; index < formatted.length - 4; index++) {
-            const first = formatted[index - 3]
-            const second = formatted[index - 2]
-            const third = formatted[index - 1]
-            const fourth = formatted[index]
+        for(let i = 0; index < raw.length; index++, i++) {
+            const values = raw.substring(i, index);
 
-            if (uniq([first, second, third, fourth]).length === 4) {
-                return index + 1;
+            if (uniq(values.split('')).length === amount) {
+                return index;
             }
         }
 
     }
 
     public async part1(): Promise<number> {
-         return await this.solve();
+         return await this.solve(4);
     }
 
     async part2(): Promise<number> {
-        const stacks = await this.solve();
-
-        return 0;
+        return await this.solve(14);
     }
 
     print(result: string[]): string {
