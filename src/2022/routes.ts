@@ -92,9 +92,7 @@ export default [
             question2: solver.question2,
             input: solver.input.raw,
             solution1: '<code>' + solution1 + '</code>',
-            output1: solver.print([]),
             solution2: '<code>' + solution2 + '</code>',
-            output2: solver.print([]),
         });
     },
     ];
