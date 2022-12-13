@@ -6,7 +6,7 @@ export default class Day08 extends Day {
     constructor() {
         super(2022, 8, 'Treetop Tree House');
         this.setQuestion1('How many trees are visible from outside the grid?')
-        this.setQuestion2('How many characters need to be processed before the first start-of-message marker is detected?')
+        this.setQuestion2('What is the highest scenic score possible for any tree?')
     }
 
     async solve(): Promise<any> {
@@ -49,7 +49,48 @@ export default class Day08 extends Day {
         }
 
         return Math.max(...treeHeights) < height;
+    }
 
+    getScenicScore(grid: number[][], x: number, y: number): number {
+        const height = grid[y][x];
+
+        const maxX = grid[0].length - 1;
+        const maxY = grid.length - 1;
+
+        let directionScore = {
+            l: 1,
+            r: 1,
+            u: 1,
+            d: 1
+        };
+
+        console.log(x, y);
+
+        let i = x + 1;
+        while(grid[y][i] < height && i < maxX) {
+            directionScore.r++;
+            i++;
+        }
+
+        i = x - 1;
+        while(grid[y][i] < height && i > 0) {
+            directionScore.l++;
+            i--;
+        }
+
+        i = y + 1;
+        while(grid[i][x] < height && i < maxY) {
+            directionScore.d++;
+            i++;
+        }
+
+        i = y - 1;
+        while(grid[i][x] < height && i > 0) {
+            directionScore.u++;
+            i--;
+        }
+
+        return directionScore.d * directionScore.l * directionScore.r * directionScore.u;
     }
 
     public async part1(): Promise<any> {
@@ -71,6 +112,24 @@ export default class Day08 extends Day {
     }
 
     async part2(): Promise<number> {
-        return 0;
+        const grid = await this.solve();
+
+        const maxX = grid[0].length;
+        const maxY = grid.length;
+
+        let max = 0;
+
+        for(let i = 1; i < maxY - 1; i++) {
+            for(let j = 1; j < maxX - 1; j++) {
+                if(this.isVisible(grid, j, i)) {
+                    const score = this.getScenicScore(grid, j, i);
+                    if(score > max) {
+                        max  = score
+                    }
+                }
+            }
+        }
+
+        return max;
     }
 }

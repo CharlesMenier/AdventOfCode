@@ -117,6 +117,7 @@ export default [
         const solver = new Day08();
 
         const solution1 = await solver.part1();
+        const solution2 = await solver.part2();
 
         res.render('day', {
             title: solver.title,
@@ -125,7 +126,7 @@ export default [
             input: solver.input.raw,
             solution1: '<code>' + solution1 + '</code>',
             output1: '',
-            solution2: '<code>'  + '</code>',
+            solution2: '<code>' + solution2 + '</code>',
         });
     },
     ];
