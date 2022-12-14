@@ -100,6 +100,3 @@ export default class Day09 extends Day {
         return uniqBy(history, a => `${a.x}${a.y}`).length;
     }
 }
-
-const solver = new Day09();
-solver.part1();
