@@ -9,11 +9,14 @@ class CPU {
     pendingInstruction: Instruction;
     cycleValues: number[];
 
+    crt: string[];
+
     constructor() {
         this.value = 1;
         this.cycle = 0;
         this.pendingInstructions = [];
         this.cycleValues = [];
+        this.crt = [];
     }
 
     execute(program: string[]) {
@@ -34,6 +37,14 @@ class CPU {
 
         while(instructions.length || this.pendingInstruction) {
 
+            const position = this.cycle % 40;
+
+            if(this.value - 1 <= position && position <= this.value + 1) {
+                this.crt.push('#')
+            } else {
+                this.crt.push('.');
+            }
+
             this.cycle++;
             this.cycleValues.push(this.value);
 
@@ -48,22 +59,6 @@ class CPU {
             if(this.pendingInstruction.durationLeft === 0) {
                 this.pendingInstruction = null;
             }
-
-            /*if(instructions.length) {
-                this.pendingInstructions.push(instructions.shift());
-            }
-
-            this.value = this.pendingInstructions
-                .reduce((newValue, inst) => {
-                    const instructionValue = inst.process();
-                    return newValue + instructionValue;
-                }, this.value);
-
-            this.pendingInstructions = this.pendingInstructions.filter(inst => inst.durationLeft > 0);
-
-            this.cycleValues.push(this.value);
-
-            this.cycle++;*/
         }
     }
 }
@@ -119,7 +114,7 @@ export default class Day10 extends Day {
     constructor() {
         super(2022, 10, 'Cathode-Ray Tube');
         this.setQuestion1('What is the sum of these six signal strengths?')
-        this.setQuestion2('What is the highest scenic score possible for any tree?')
+        this.setQuestion2('What eight capital letters appear on your CRT?')
     }
 
     async solve(): Promise<any> {
@@ -129,20 +124,20 @@ export default class Day10 extends Day {
 
         cpu.execute(formatted);
 
-        return cpu.cycleValues;
+        return cpu;
 
     }
 
-    async part1(): Promise<any> {
-         const values = await this.solve();
+    async part1(): Promise<number> {
+         const cpu = await this.solve();
 
-         const res = [20, 60, 100, 140, 180, 220]
-             .reduce((signal, cycleValue) => signal + cycleValue * values[cycleValue - 1], 0);
-
-         return res;
+         return [20, 60, 100, 140, 180, 220]
+             .reduce((signal, cycleValue) => signal + cycleValue * cpu.cycleValues[cycleValue - 1], 0);
     }
 
-    async part2(): Promise<number> {
-        return await this.solve();
+    async part2(): Promise<string> {
+        const cpu = await this.solve();
+
+        return cpu.crt.join('').match(/.{1,40}/g).join('\n');
     }
 }
