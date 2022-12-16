@@ -8,6 +8,7 @@ import Day07 from "./solutions/day07";
 import Day08 from "./solutions/day08";
 import Day09 from "./solutions/day09";
 import Day10 from "./solutions/day10";
+import Day11 from "./solutions/day11";
 
 export default [
     async (req, res) => {
@@ -149,6 +150,22 @@ export default [
     },
     async (req, res) => {
         const solver = new Day10();
+
+        const solution1 = await solver.part1();
+        const solution2 = await solver.part2();
+
+        res.render('day', {
+            title: solver.title,
+            question1: solver.question1,
+            question2: solver.question2,
+            input: solver.input.raw,
+            solution1: '<code>' + solution1 + '</code>',
+            output1: '',
+            solution2: '<code>' + solution2 + '</code>',
+        });
+    },
+    async (req, res) => {
+        const solver = new Day11();
 
         const solution1 = await solver.part1();
         const solution2 = await solver.part2();
