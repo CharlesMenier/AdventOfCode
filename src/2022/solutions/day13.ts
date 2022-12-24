@@ -1,21 +1,38 @@
 import Day from "../../common/day";
 
+const test = '[1,1,3,1,1]\n' +
+    '[1,1,5,1,1]\n' +
+    '\n' +
+    '[[1],[2,3,4]]\n' +
+    '[[1],4]\n' +
+    '\n' +
+    '[9]\n' +
+    '[[8,7,6]]\n' +
+    '\n' +
+    '[[4,4],4,4]\n' +
+    '[[4,4],4,4,4]\n' +
+    '\n' +
+    '[7,7,7,7]\n' +
+    '[7,7,7]\n' +
+    '\n' +
+    '[]\n' +
+    '[3]\n' +
+    '\n' +
+    '[[[]]]\n' +
+    '[[]]\n' +
+    '\n' +
+    '[1,[2,[3,[4,[5,6,7]]]],8,9]\n' +
+    '[1,[2,[3,[4,[5,6,0]]]],8,9]';
+
 Array.prototype.toString = function() {
     return `[${this.join(',')}]`;
 }
 
 class Packet {
-    left: Array<number|number[]>;
-    right: Array<number|number[]>;
+    value: Array<number|number[]>;
 
     constructor(input: string) {
-        const [left, right] = input.split('\n');
-        this.left = JSON.parse(left);
-        this.right = JSON.parse(right);
-    }
-
-    isOrdered() {
-        return this.compare(this.left, this.right);
+        this.value = JSON.parse(input);
     }
 
     compare(left: Array<number|number[]>, right: Array<number|number[]>): boolean {
@@ -76,6 +93,36 @@ class Packet {
         }
     }
 
+    compareTo(packet: Packet): number {
+        const result = this.compare(this.value, packet.value);
+
+        return result === undefined ? 0 : result ? -1 : 1;
+    }
+
+    isDecoderKey(): boolean {
+        return false;
+    }
+}
+
+class DividerPacket extends Packet {
+    isDecoderKey(): boolean {
+        return true;
+    }
+}
+
+class Pair {
+    left: Packet;
+    right: Packet;
+
+    constructor(input: string) {
+        const [left, right] = input.split('\n');
+        this.left = new Packet(left);
+        this.right = new Packet(right);
+    }
+
+    isOrdered() {
+        return this.left.compareTo(this.right);
+    }
 }
 
 export default class Day13 extends Day {
@@ -83,11 +130,11 @@ export default class Day13 extends Day {
     constructor() {
         super(2022, 13, 'Distress Signal');
         this.setQuestion1('What is the sum of the indices of those pairs?')
-        this.setQuestion2('What is the level of monkey business after 10000 rounds?')
+        this.setQuestion2('What is the decoder key for the distress signal?')
     }
 
     solve(input: string[]): any {
-        const packets = input.map(p => new Packet(p));
+        const packets = input.map(p => new Pair(p));
 
         const ordered = packets.map((p, i) => {
             console.log(`\n== Pair ${i + 1} ==`);
@@ -95,48 +142,40 @@ export default class Day13 extends Day {
             return p.isOrdered();
         });
 
-        const total = ordered.reduce((total, isOrdered, i) => isOrdered ? total + (i+1) : total, 0);
-
-        console.log(total);
-
-        return total;
+        return ordered.reduce((total, isOrdered, i) => isOrdered ? total + (i+1) : total, 0);
     }
 
     async part1(): Promise<number> {
         const {formatted} = await this.getInput('\n\n');
-
-         return this.solve(formatted);
+        return this.solve(formatted);
     }
 
     async part2(): Promise<number> {
-        return this.solve([]);
+        const {formatted} = await this.getInput();
+
+        const divider = [new DividerPacket('[[2]]'), new DividerPacket('[[6]]')];
+        let decoderKey = 1;
+
+        const packets = formatted
+            .filter(a => a)
+            .map(p => new Packet(p));
+
+        packets.push(...divider);
+
+        packets
+            .sort((a, b) => a.compareTo(b))
+            .forEach((p, i) => {
+                console.log(p.value);
+
+                if(p.isDecoderKey()) {
+                    decoderKey = decoderKey * (i + 1);
+                }
+            });
+
+        return decoderKey;
     }
 
     test() {
-        const input = '[1,1,3,1,1]\n' +
-            '[1,1,5,1,1]\n' +
-            '\n' +
-            '[[1],[2,3,4]]\n' +
-            '[[1],4]\n' +
-            '\n' +
-            '[9]\n' +
-            '[[8,7,6]]\n' +
-            '\n' +
-            '[[4,4],4,4]\n' +
-            '[[4,4],4,4,4]\n' +
-            '\n' +
-            '[7,7,7,7]\n' +
-            '[7,7,7]\n' +
-            '\n' +
-            '[]\n' +
-            '[3]\n' +
-            '\n' +
-            '[[[]]]\n' +
-            '[[]]\n' +
-            '\n' +
-            '[1,[2,[3,[4,[5,6,7]]]],8,9]\n' +
-            '[1,[2,[3,[4,[5,6,0]]]],8,9]';
-
-        return this.solve(input.split('\n\n'));
+        return this.solve(test.split('\n\n'));
     }
 }
