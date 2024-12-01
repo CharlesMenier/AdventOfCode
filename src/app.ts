@@ -1,6 +1,7 @@
 import express from 'express';
 import answer2020 from './2020/routes';
 import answer2022 from './2022/routes';
+import answer2023 from './2023/routes';
 import {getQuestion} from "./common/getInput";
 
 const app = express();
@@ -20,6 +21,10 @@ answer2020.forEach((answer, i) => {
 
 answer2022.forEach((answer, i) => {
     app.get(`/2022/day/${i + 1}`, answer);
+})
+
+answer2023.forEach((answer, i) => {
+    app.get(`/2023/day/${i + 1}`, answer);
 })
 
 app.get('/test/', () => getQuestion(2022, 1).then(result => console.log(result.data)));
