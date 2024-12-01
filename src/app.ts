@@ -2,7 +2,7 @@ import express from 'express';
 import answer2020 from './2020/routes';
 import answer2022 from './2022/routes';
 import answer2023 from './2023/routes';
-import {getQuestion} from "./common/getInput";
+import answer2024 from './2024/routes';
 
 const app = express();
 const port = 3000;
@@ -27,7 +27,9 @@ answer2023.forEach((answer, i) => {
     app.get(`/2023/day/${i + 1}`, answer);
 })
 
-app.get('/test/', () => getQuestion(2022, 1).then(result => console.log(result.data)));
+answer2024.forEach((answer, i) => {
+    app.get(`/2024/day/${i + 1}`, answer);
+})
 
 app.listen(port, () => {
     return console.log(`server is listening on ${port}`);
